@@ -89,10 +89,10 @@ class ImageFirstFormatter extends ImageFormatterBase implements ContainerFactory
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(
+    return [
       'image_style' => '',
       'image_link' => '',
-    ) + parent::defaultSettings();
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -111,20 +111,20 @@ class ImageFirstFormatter extends ImageFormatterBase implements ContainerFactory
       '#empty_option' => t('None (original image)'),
       '#options' => $image_styles,
       '#description' => $description_link->toRenderable() + [
-        '#access' => $this->currentUser->hasPermission('administer image styles')
+        '#access' => $this->currentUser->hasPermission('administer image styles'),
       ],
     ];
-    $link_types = array(
+    $link_types = [
       'content' => t('Content'),
       'file' => t('File'),
-    );
-    $element['image_link'] = array(
+    ];
+    $element['image_link'] = [
       '#title' => t('Link image to'),
       '#type' => 'select',
       '#default_value' => $this->getSetting('image_link'),
       '#empty_option' => t('Nothing'),
       '#options' => $link_types,
-    );
+    ];
 
     return $element;
   }
@@ -133,7 +133,7 @@ class ImageFirstFormatter extends ImageFormatterBase implements ContainerFactory
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $summary = array();
+    $summary = [];
 
     $image_styles = image_style_options(FALSE);
     // Unset possible 'No defined styles' option.
@@ -142,16 +142,16 @@ class ImageFirstFormatter extends ImageFormatterBase implements ContainerFactory
     // their styles in code.
     $image_style_setting = $this->getSetting('image_style');
     if (isset($image_styles[$image_style_setting])) {
-      $summary[] = t('Image style: @style', array('@style' => $image_styles[$image_style_setting]));
+      $summary[] = t('Image style: @style', ['@style' => $image_styles[$image_style_setting]]);
     }
     else {
       $summary[] = t('Original image');
     }
 
-    $link_types = array(
+    $link_types = [
       'content' => t('Linked to content'),
       'file' => t('Linked to file'),
-    );
+    ];
     // Display this setting only if image is linked.
     $image_link_setting = $this->getSetting('image_link');
     if (isset($link_types[$image_link_setting])) {
@@ -165,7 +165,7 @@ class ImageFirstFormatter extends ImageFormatterBase implements ContainerFactory
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    $elements = array();
+    $elements = [];
     $files = $this->getEntitiesToView($items, $langcode);
 
     // Early opt-out if the field is empty.
@@ -215,18 +215,19 @@ class ImageFirstFormatter extends ImageFormatterBase implements ContainerFactory
       $item_attributes = $item->_attributes;
       unset($item->_attributes);
 
-      $elements[$delta] = array(
+      $elements[$delta] = [
         '#theme' => 'image_formatter',
         '#item' => $item,
         '#item_attributes' => $item_attributes,
         '#image_style' => $image_style_setting,
         '#url' => $url,
-        '#cache' => array(
+        '#cache' => [
           'tags' => $cache_tags,
           'contexts' => $cache_contexts,
-        ),
-      );
+        ],
+      ];
 
+      // To display always only the first image the loop simply quits here.
       break;
     }
 
