@@ -1,6 +1,6 @@
 name: Image First Formatter
 type: module
-description: 'Provides an "Image First" formatter to display only the first image of multi-value image fields.'
+description: 'Provides an "Image First" field formatter to display only the first image of multi-value image fields.'
 core: 8.x
 package: Custom
 dependencies:
