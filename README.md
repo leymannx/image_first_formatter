@@ -8,7 +8,7 @@ multi-value **image** fields.
 1. Move module into `modules/custom`
 1. Enable module
 1. Flush cache   
-1. Go to the display settings where you output that image field and select "Image First" formatter
+1. Go to the display settings where you output your image field and select "Image First" formatter
 
 To have this module added via composer paste the following into your
 `composer.json` and then run `composer require leymannx/image_first_formatter`.
